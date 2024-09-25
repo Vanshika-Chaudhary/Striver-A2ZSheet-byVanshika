@@ -1,0 +1,170 @@
+<!--Given the head of a singly linked list, return the middle node of the linked list.
+If there are two middle nodes, return the second middle node.-->
+Code -
+ public static Node findMiddle(Node head)
+    {
+        // Write your code here.
+        Node slow = head;
+        Node fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+<!--You are given a Singly Linked List of integers. You need to reverse the Linked List by changing the links between nodes.-->
+Code - Iterative 
+ public static Node reverseLinkedList(Node head)
+    {
+        // Write your code here.
+         if (head == null || head.next == null) {
+            return head;
+        }
+        Node curr = head;
+        Node prev = null;
+        Node next = curr.next;
+        while (curr != null) {
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+           if(next != null) next = next.next;
+        }
+        return prev;
+    }
+
+Code - Recursive Approach
+ public static Node reverseLinkedList(Node head)
+    {
+        // Write your code here.
+         if (head == null || head.next == null) {
+            return head;
+        }
+        
+       Node newHead = reverseLinkedList(head.next);
+    head.next.next = head;
+    head.next = null;
+
+    return newHead;
+
+    }
+
+<!--You are given a Singly Linked List of integers. Return true if it has a cycle, else return false.
+A cycle occurs when a node's next points back to a previous node in the list.-->
+
+Code - 
+public static boolean detectCycle(Node head) {
+        //Your code goes here
+         if(head== null || head.next == null){
+            return false;
+        }
+        Node slow = head;
+        Node fast = head;
+        while(fast != null && fast.next != null ){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast){
+                return true;
+            }
+        }
+        return false;
+    }
+
+<!--Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null.-->
+
+Code - 
+      public ListNode detectCycle(ListNode head) {
+        //Find out the length of cycle 
+       
+        int count = 0;
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                slow = slow.next;
+                count = 1;
+                while(slow != fast){
+                    slow = slow.next;
+                    count++;
+                }
+                break;
+            }
+        }
+        if(count == 0){
+            return null;
+        }
+
+        // find the start node
+        ListNode s = head;
+        ListNode f = head;
+        while(count>0){
+            s = s.next;
+            count--;
+        }
+        // keep moving forward and they will meet at start 
+        while(f != s){
+            s = s.next;
+            f = f.next;
+        }
+        return s;
+    }
+
+
+<!-- You’re given a linked list. The last node might point to null, or it might point to a node in the list, thus forming a cycle.
+Find out whether the linked list has a cycle or not, and the length of the cycle if it does.
+If there is no cycle, return 0, otherwise return the length of the cycle.-->
+Code - 
+public static int lengthOfLoop(Node head) {
+        // Write your code here
+        int length = 0;
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                slow = slow.next;
+                length = 1;
+                while(slow != fast){
+                    slow = slow.next;
+                    count++;
+                }
+                break;
+            }
+        }
+        return count;
+    }
+<!--Given the head of a singly linked list, return true if it is a palindrome or false otherwise. -->
+Code - 
+ public boolean isPalindrome(ListNode head) {
+        // Find mid 
+        ListNode mid = findMiddle(head);
+        //Reverse
+        ListNode curr = mid;
+        ListNode prev = null;
+        ListNode next;
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        // Check
+        ListNode left = head;
+        ListNode right = prev;
+        while(right != null){
+            if(left.val != right.val){
+                return false;
+            }
+            else{
+                left = left.next;
+                right = right.next;
+            }
+        }
+        return true;
+    }
+
+
+
